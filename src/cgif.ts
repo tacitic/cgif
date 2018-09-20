@@ -29,10 +29,21 @@ export class CGif {
     this.seq = seq
     this.opts = opts
     this.preload = preload
+
     if (preload) {
+      // Create a image cache. This will be used for preloading and caching.
       const images = (seq instanceof Array) ? seq : range(1, this.numFrames()+1).map(seq)
       this.cache = new ImageCache(images)
+      
+      // Display the first image as soon as it loads.
+      this.cache.onImageLoad((i, img) => {
+        let ctx = elem.getContext('2d');
+        if (i === 0 && ctx !== null) {
+          draw(ctx, img, 0, 0, elem.width, elem.height)
+        }
+      })
     } else {
+      // No preloading means empty cache.
       this.cache = new ImageCache([])
     }
     this.tween = this.createTween()
@@ -45,6 +56,8 @@ export class CGif {
       self.cache.load().then((_) => {
         self.tween.play()
       })
+    } else {
+      self.tween.play();
     }
   }
 

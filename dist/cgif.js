@@ -10,10 +10,19 @@ var CGif = /** @class */ (function () {
         this.opts = opts;
         this.preload = preload;
         if (preload) {
+            // Create a image cache. This will be used for preloading and caching.
             var images = (seq instanceof Array) ? seq : range(1, this.numFrames() + 1).map(seq);
             this.cache = new ImageCache(images);
+            // Display the first image as soon as it loads.
+            this.cache.onImageLoad(function (i, img) {
+                var ctx = elem.getContext('2d');
+                if (i === 0 && ctx !== null) {
+                    draw(ctx, img, 0, 0, elem.width, elem.height);
+                }
+            });
         }
         else {
+            // No preloading means empty cache.
             this.cache = new ImageCache([]);
         }
         this.tween = this.createTween();
@@ -25,6 +34,9 @@ var CGif = /** @class */ (function () {
             self.cache.load().then(function (_) {
                 self.tween.play();
             });
+        }
+        else {
+            self.tween.play();
         }
     };
     // Pause pauses the cgif

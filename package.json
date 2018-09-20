@@ -1,0 +1,36 @@
+{
+  "name": "cgif",
+  "version": "1.0.0",
+  "description": "Canvas image sequencer (canvas gif)",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "tsc",
+    "bundle": "rollup -c",
+    "watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "git+https://github.com/tacitic/cgif.git",
+  "keywords": [
+    "gif",
+    "canvas"
+  ],
+  "author": "Robert den Harink",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tacitic/cgif/issues"
+  },
+  "homepage": "https://github.com/tacitic/cgif#readme",
+  "dependencies": {
+    "gsap": "^2.0.2",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@types/gsap": "^1.19.2",
+    "@types/ramda": "^0.25.38",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.0.3"
+  }
+}

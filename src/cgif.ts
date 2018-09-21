@@ -35,13 +35,18 @@ export class CGif {
       const images = (seq instanceof Array) ? seq : range(1, this.numFrames()+1).map(seq)
       this.cache = new ImageCache(images)
       
-      // Display the first image as soon as it loads.
-      this.cache.onImageLoad((i, img) => {
+      var poster = new Image
+      poster.onload = function(){
         let ctx = elem.getContext('2d');
-        if (i === 0 && ctx !== null) {
-          draw(ctx, img, 0, 0, elem.width, elem.height)
+        if (ctx !== null) {
+          draw(ctx, poster, 0, 0, elem.width, elem.height);
         }
-      })
+      }
+      let firstPath = this.cache.getPath(0);
+      if (firstPath) {
+        poster.src = firstPath;
+      } 
+      
     } else {
       // No preloading means empty cache.
       this.cache = new ImageCache([])
@@ -50,12 +55,14 @@ export class CGif {
   }
 
   // Play resumes the cgif.
-  play(): void {
+  play(delay=0): void {
     const self = this;
     if (self.preload && !self.cache.done()) {
-      self.cache.load().then((_) => {
-        self.tween.play()
-      })
+      setTimeout(function(){
+        self.cache.load().then((_) => {
+          self.tween.play()
+        })
+      }, delay)
     } else {
       self.tween.play();
     }

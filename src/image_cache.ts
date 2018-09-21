@@ -28,6 +28,10 @@ export class ImageCache {
     return this.data[path] || null
   }
 
+  getPath(n: number): string | null {
+    return this.paths[n] || null
+  }
+
   set(path: string, img: HTMLImageElement) {
     this.data[path] = img
   }

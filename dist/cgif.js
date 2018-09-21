@@ -17,6 +17,7 @@ var CGif = /** @class */ (function () {
             this.cache.onImageLoad(function (i, img) {
                 var ctx = elem.getContext('2d');
                 if (i === 0 && ctx !== null) {
+                    console.log('frame one');
                     draw(ctx, img, 0, 0, elem.width, elem.height);
                 }
             });
